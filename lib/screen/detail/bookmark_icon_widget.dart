@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tourism_app/model/tourism.dart';
-import 'package:tourism_app/provider/detail/bookmark_icon_detail.dart';
+import 'package:tourism_app/data/model/tourism.dart';
+import 'package:tourism_app/provider/detail/bookmark_icon_provider.dart';
 import 'package:tourism_app/provider/detail/bookmark_list_provider.dart';
 
 class BookmarkIconWidget extends StatefulWidget {
@@ -43,12 +43,12 @@ class _BookmarkIconWidgetState extends State<BookmarkIconWidget> {
        final isBookmarked = bookmarkIconProvider.isBookmarked;
  
  
-       if (!isBookmarked) {
-         bookmarkListProvider.addBookmark(widget.tourism);
-       } else {
+       if (isBookmarked) {
          bookmarkListProvider.removeBookmark(widget.tourism);
+       } else {
+         bookmarkListProvider.addBookmark(widget.tourism);
        }
-       bookmarkIconProvider.isBookmarked = !isBookmarked;
+       context.read<BookmarkIconProvider>().isBookmarked = !isBookmarked;
      },
      icon: Icon(
        context.watch<BookmarkIconProvider>().isBookmarked
